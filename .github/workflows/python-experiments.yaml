@@ -1,0 +1,24 @@
+# File python-experiments.yaml is for GitHub Actions experiments with Python; for example, caching, testing multiple versions, an packaging—see https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python page.
+name: Python experiments
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      # You can use PyPy versions in python-version.
+      # For example, pypy2.7 and pypy3.9
+      matrix:
+        python-version: ["2.7", "3.7", "3.8", "3.9", "3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
