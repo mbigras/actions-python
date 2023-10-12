@@ -22,5 +22,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Display Python version
+          cache: pip
+      - name: Check version
         run: python -c "import sys; print(sys.version)"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Check dependencies
+        run: python -c 'import arrow; print(arrow.__version__)'
